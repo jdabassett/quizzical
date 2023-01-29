@@ -6,7 +6,7 @@ export default function App() {
     <div className="app-container">
       <div className="landing-container">
         <h1 className="landing-title text">Quizzical</h1>
-        <p className="landing-description text">Test your knowledge! Anwser these random assortment of questions from our friends at 'Open Trivia Database'. Do it to impress your friends, yourself, and most of all to gain the respect of your cat!</p>
+        <p className="landing-description text">Test your knowledge! Anwser these random assortment of questions from our friends at <strong>Open Trivia Database</strong>. Do it to impress your friends, yourself, and most of all to gain the respect of your cat!</p>
         <button className="landing-button button-submit">Start Quiz</button>
       </div>
       
