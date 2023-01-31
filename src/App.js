@@ -15,11 +15,11 @@ export default function App() {
     correctResponses:0,
   })
 
-  let [rawData,setRawData] =React.useState([])
+  let [rawData,setRawData] =React.useState(()=>getData())
 
   //to replace characters in questions
   function removeCharacters(question) {
-    return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"").replace(/(&ouml;)/g, "\o");
+    return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo;)/g, "\"").replace(/(&#039;)/g, "'").replace(/(&amp;)/g, "\"").replace(/(&ouml;)/g, "o");
   }
 
   //change the status to switch between pages 
@@ -42,11 +42,6 @@ export default function App() {
             }
       })))
   }
-
-  //on load, get data 
-  React.useEffect(()=>(
-    getData()
-  ),[])
 
 
   function handlerGradeQuiz() {
