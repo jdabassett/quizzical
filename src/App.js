@@ -2,7 +2,6 @@
 import './App.css';
 import React from 'react';
 import { nanoid } from 'nanoid';
-import Data from './Data.jsx';
 import Landing from './components/Landing.jsx';
 import Quiz from './components/Quiz.jsx';
 
