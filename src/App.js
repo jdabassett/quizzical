@@ -1,78 +1,86 @@
 
 import './App.css';
+import React from 'react';
+// import { nanoid } from 'nanoid';
+import Data from './Data.jsx';
+import Landing from './components/Landing.jsx';
+import Quiz from './components/Quiz.jsx';
+
 
 export default function App() {
+  let [landing,setLanding]= React.useState(true);
+  let [quizResults,setQuizResults] = React.useState({
+    grading:false,
+    totalQuestions:0,
+    correctResponses:0,
+  })
+  let [rawData,setRawData] =React.useState([])
+
+
+  function shuffleArray(arr) {
+    arr.sort(() => Math.random() - 0.5);
+  }
+
+  // function processData() {
+  //   setProcessedData(rawData.map(obj => {
+  //     return {
+  //       question: obj.question,
+  //       correctAnswer: obj.correct_answer,
+  //       allAnswers: shuffleArray([...obj.incorrect_answers, obj.correct_answer])
+  //     }
+  //   }))
+  // }
+
+
+  //change the status to switch between pages 
+  function handlerSwitchPage() {
+    setLanding(false);
+  }
+
+  function handlerGradeQuiz() {
+    console.log(quizResults.grading)
+    setQuizResults(prevState => ({...prevState,grading: !prevState.grading}))
+  }
+
+  function handlerNewQuiz() {
+    console.log(quizResults.grading)
+    setQuizResults(prevState => ({...prevState,grading: !prevState.grading}))
+    
+  }
+
+  //fetch and process data
+  function getData() {
+    fetch('https://opentdb.com/api.php?amount=5&category=17&difficulty=easy&type=multiple')
+      .then(response => response.json())
+      .then(data => setRawData(data.results.map(item=>{
+            return {
+              question: item.question,
+              correctAnswer: item.correct_answer,
+              allAnswers: [...item.incorrect_answers, item.correct_answer].sort(() => Math.random() - 0.5)
+            }
+      })))
+  }
+
+  React.useEffect(()=>(
+    getData()
+  ),[])
+  
+  console.log(rawData);
+
   return (
     <div className="app-container">
-      <div className="landing-container">
-        <h1 className="landing-title text">Quizzical</h1>
-        <p className="landing-description text">Test your knowledge! Anwser these random assortment of questions from our friends at <strong>Open Trivia Database</strong>. Do it to impress your friends, yourself, and most of all to gain the respect of your cat!</p>
-        <button className="landing-button button-submit">Start Quiz</button>
-      </div>
+
+      {(landing===true)?
+        <Landing 
+          handlerSwitchPage={handlerSwitchPage}/>
+          :""}
       
-      <div className="quiz-container hidden">
-        <div className="quiz-question-container">
-          <p className="quiz-question">How would one say goodbye in Spanish?</p>
-          <div className="quiz-answers-container">
-            <button className="quiz-answer">Answer1</button>
-            <button className="quiz-answer">Answer2</button>
-            <button className="quiz-answer">Answer3</button>
-            <button className="quiz-answer">Long ass answer</button>
-          </div>
-          <hr></hr>
-        </div>
-
-        <div className="quiz-question-container">
-          <p className="quiz-question">How would one say goodbye in Spanish?</p>
-          <div className="quiz-answers-container">
-            <button className="quiz-answer">Answer1</button>
-            <button className="quiz-answer">Answer2</button>
-            <button className="quiz-answer">Answer3</button>
-            <button className="quiz-answer">Even Longer Ass Answer than that</button>
-          </div>
-          <hr></hr>
-        </div>
-
-        <div className="quiz-question-container">
-          <p className="quiz-question">How would one say goodbye in Spanish?</p>
-          <div className="quiz-answers-container">
-            <button className="quiz-answer">Answer1</button>
-            <button className="quiz-answer">Answer2</button>
-            <button className="quiz-answer">Answer3</button>
-            <button className="quiz-answer">This is the longes answer I dare write out loud</button>
-          </div>
-          <hr></hr>
-        </div>
-
-        <div className="quiz-question-container">
-          <p className="quiz-question">How would one say goodbye in Spanish?</p>
-          <div className="quiz-answers-container">
-            <button className="quiz-answer">Answer1</button>
-            <button className="quiz-answer">Answer2</button>
-            <button className="quiz-answer">Answer3</button>
-            <button className="quiz-answer">LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO</button>
-          </div>
-          <hr></hr>
-        </div>
-
-        <div className="quiz-question-container">
-          <p className="quiz-question">How would one say goodbye in Spanish?</p>
-          <div className="quiz-answers-container">
-            <button className="quiz-answer">Answer1</button>
-            <button className="quiz-answer">Answer2</button>
-            <button className="quiz-answer">Answer3</button>
-            <button className="quiz-answer">Answer4</button>
-          </div>
-          <hr></hr>
-        </div>
-
-        <div className="quiz-results-submit-container">
-          <p className="quiz-results">Your scored 0/5 correctly!</p>
-          <button className="quiz-submit button-submit">Submit Answers</button>
-        </div>
-        
-
-      </div>
+      {(landing===false)?
+        <Quiz 
+          quizResults={quizResults}
+          handlerGradeQuiz={handlerGradeQuiz}
+          handlerNewQuiz={handlerNewQuiz}/>
+          :""}
       
     </div>
   );

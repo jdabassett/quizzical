@@ -65,10 +65,6 @@ body {
 .landing-button .button 
 */
 
-.hidden {
-  transform:scale(0);
-}
-
 .landing-container {
   position:absolute;
   outline:2px solid red;
@@ -105,6 +101,14 @@ body {
   border-radius:0.25em;
 }
 
+.button:hover {
+  cursor:pointer;
+}
+
+.button:active {
+  background-color:var(--dark-text);
+}
+
 
 
 
@@ -116,7 +120,7 @@ body {
 .quiz-answer 
 .quiz-submit
 .quiz-results-submit-container
-.className="quiz-results
+.quiz-results
 */
 
 .quiz-container {
