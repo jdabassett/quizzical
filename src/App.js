@@ -8,7 +8,7 @@ import Quiz from './components/Quiz.jsx';
 
 
 export default function App() {
-  let [landing,setLanding]= React.useState(false);
+  let [landing,setLanding]= React.useState(true);
 
   let [quizResults,setQuizResults] = React.useState({
     grading:false,
@@ -59,6 +59,14 @@ export default function App() {
           totalQuestions:prevState.totalQuestions+1,
           correctResponses:item.answeredRight? prevState.correctResponses+1 :prevState.correctResponses
         }))))
+
+    setRawData(prevRawData => prevRawData.map((item) => (
+        {...item,
+          answerStatus:item.answerStatus.map((status,index)=>(
+            (item.correctAnswer===item.allAnswers[index])?"correct":((status==="selected")?"incorrect":"unselected")
+            ))
+        }
+    )))
   }
 
 
@@ -79,8 +87,6 @@ export default function App() {
       )
       )
   }
-  
-  console.log(quizResults)
 
   return (
     <div className="app-container">
