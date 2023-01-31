@@ -67,7 +67,7 @@ body {
 
 .landing-container {
   position:absolute;
-  outline:2px solid red;
+  /* outline:2px solid red; */
   width:25em;
   height:30em;
   display:flex;
@@ -125,7 +125,7 @@ body {
 
 .quiz-container {
   position:absolute;
-  outline:2px solid red;
+  /* outline:2px solid red; */
   width:25em;
   height:38em;
   display:flex;
@@ -170,7 +170,17 @@ body {
   font-family:'Inter';
   font-style:normal;
   font-weight:400;
-  color:black;
+  color:var(--dark-text);
+}
+
+.selected {
+  background-color:var(--selected-answer);
+}
+.incorrect {
+  background-color:var(--wrong-answer);
+}
+.correct {
+  background-color:var(--correct-answer);
 }
 
 hr {
@@ -210,7 +220,7 @@ hr {
     font-size:20px;
   }
   .app-container {
-    outline:2px solid yellow;
+    /* outline:2px solid yellow; */
     width:900px;
     height:800px;
   }
@@ -221,7 +231,7 @@ hr {
     font-size:15px;
   }
   .app-container {
-    outline:2px solid red;
+    /* outline:2px solid red; */
     width:500px;
     height:600px;
   }
@@ -232,7 +242,7 @@ hr {
     font-size:10px;
   }
   .app-container {
-    outline:2px solid green;
+    /* outline:2px solid green; */
     width:340px;
     height:620px;
   }

@@ -3,12 +3,20 @@ import QuizQuestion from './QuizQuestion.jsx';
 
 export default function Quiz(props) {
 
-  console.log(props.rawData)
+  let questionElements = props.rawData.map(item => {
+    return <QuizQuestion 
+              key={item.id}
+              id={item.id}
+              question={item.question}
+              answers={item.allAnswers}
+              answersStatus={item.answerStatus}
+              handlerAnswerSelected={props.handlerAnswerSelected}
+              />
+  })
   return (
     <div className="quiz-container">
 
-      <QuizQuestion />
-
+        {questionElements}
 
         { props.quizResults.grading ?
         <div className="quiz-results-submit-container">

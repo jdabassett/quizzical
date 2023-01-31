@@ -1,51 +1,31 @@
 
 import './App.css';
 import React from 'react';
-// import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid';
 import Data from './Data.jsx';
 import Landing from './components/Landing.jsx';
 import Quiz from './components/Quiz.jsx';
 
 
 export default function App() {
-  let [landing,setLanding]= React.useState(true);
+  let [landing,setLanding]= React.useState(false);
+
   let [quizResults,setQuizResults] = React.useState({
     grading:false,
     totalQuestions:0,
     correctResponses:0,
   })
+
   let [rawData,setRawData] =React.useState([])
 
-
-  function shuffleArray(arr) {
-    arr.sort(() => Math.random() - 0.5);
+  //to replace characters in questions
+  function removeCharacters(question) {
+    return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"").replace(/(&ouml;)/g, "\o");
   }
-
-  // function processData() {
-  //   setProcessedData(rawData.map(obj => {
-  //     return {
-  //       question: obj.question,
-  //       correctAnswer: obj.correct_answer,
-  //       allAnswers: shuffleArray([...obj.incorrect_answers, obj.correct_answer])
-  //     }
-  //   }))
-  // }
-
 
   //change the status to switch between pages 
   function handlerSwitchPage() {
     setLanding(false);
-  }
-
-  function handlerGradeQuiz() {
-    console.log(quizResults.grading)
-    setQuizResults(prevState => ({...prevState,grading: !prevState.grading}))
-  }
-
-  function handlerNewQuiz() {
-    console.log(quizResults.grading)
-    setQuizResults(prevState => ({...prevState,grading: !prevState.grading}))
-    
   }
 
   //fetch and process data
@@ -54,18 +34,53 @@ export default function App() {
       .then(response => response.json())
       .then(data => setRawData(data.results.map(item=>{
             return {
-              question: item.question,
-              correctAnswer: item.correct_answer,
-              allAnswers: [...item.incorrect_answers, item.correct_answer].sort(() => Math.random() - 0.5)
+              id: nanoid(),
+              question: removeCharacters(item.question),
+              correctAnswer: removeCharacters(item.correct_answer),
+              allAnswers: [...item.incorrect_answers, item.correct_answer].sort(() => Math.random() - 0.5).map(word => removeCharacters(word)),
+              answeredRight:false,
+              answerStatus:['unselected','unselected','unselected','unselected']
             }
       })))
   }
 
+  //on load, get data 
   React.useEffect(()=>(
     getData()
   ),[])
+
+
+  function handlerGradeQuiz() {
+    setQuizResults(prevState => ({...prevState,grading: !prevState.grading}))
+
+    rawData.map(item => (
+      setQuizResults(prevState=>(
+        {...prevState,
+          totalQuestions:prevState.totalQuestions+1,
+          correctResponses:item.answeredRight? prevState.correctResponses+1 :prevState.correctResponses
+        }))))
+  }
+
+
+  function handlerNewQuiz() {
+    setQuizResults(prevState => ({...prevState,grading: !prevState.grading}));
+    getData();
+  }
+
+
+  //when answer selected update state if answer is true and to specify what button is selected
+  function handlerAnswerSelected(id,selected,index) {
+    setRawData(prevRawData => prevRawData.map((item) => (
+        {...item,
+          answeredRight: (id===item.id && selected===item.correctAnswer)? true : item.answeredRight,
+          answerStatus:item.answerStatus.map((status,index2) => (id===item.id)?((index===index2)?"selected":"unselected"):status)
+        }
+      )
+      )
+      )
+  }
   
-  console.log(rawData);
+  console.log(quizResults)
 
   return (
     <div className="app-container">
@@ -77,7 +92,9 @@ export default function App() {
       
       {(landing===false)?
         <Quiz 
+          rawData={rawData}
           quizResults={quizResults}
+          handlerAnswerSelected={handlerAnswerSelected}
           handlerGradeQuiz={handlerGradeQuiz}
           handlerNewQuiz={handlerNewQuiz}/>
           :""}

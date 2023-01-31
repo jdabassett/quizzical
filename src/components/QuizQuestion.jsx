@@ -1,19 +1,28 @@
-import React from 'react';
+import React from "react";
+import Button from "./Button.jsx"
 
+export default function QuizQuestion(props) {
 
-export default function QuizQuestion() {
+  let buttonArray = props.answers.map((answer,index) => {
+    return(<Button 
+      key={answer}
+      id={props.id}
+      answer={answer}
+      index={index}
+      status={props.answersStatus[index]}
+      handlerAnswerSelected={props.handlerAnswerSelected}
+    />)
+  })
 
-
-  return(
+  return (
     <div className="quiz-question-container">
-      <p className="quiz-question">How would one say goodbye in Spanish?</p>
+      <p className="quiz-question">{props.question}</p>
       <div className="quiz-answers-container">
-        <button className="quiz-answer">Answer1</button>
-        <button className="quiz-answer">Answer2</button>
-        <button className="quiz-answer">Answer3</button>
-        <button className="quiz-answer">Long ass answer</button>
+ 
+        {buttonArray}
+
       </div>
       <hr></hr>
     </div>
-  )
+  );
 }
