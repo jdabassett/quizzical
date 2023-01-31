@@ -1,38 +1,249 @@
-.App {
-  text-align: center;
+:root, ::before, ::after {
+  --dark-text:#5E6587;
+  --light-text:#B1B4C2;
+  --button:#4D5B9E;
+  --selected-answer:#D5DBF4;
+  --correct-answer:#95D6A2;
+  --wrong-answer:#F4D9DC;
+  --body-back-ground:#232875;
+  --app-back-ground:#F4F7FB;
+  --gray-sun:#DEEBF9;
+  --yellow-sun:#FFFAD1;
+
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400;
+  font-size:16px;
+  color:var(--dark-text);
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+body {
+  background-color:var(--body-back-ground);
+  margin:0;
+  padding:0;
+  display:flex;
+  width:100%;
+  height:100vh;
+  flex-direction:column;
+  flex-wrap:nowrap;
+  justify-content:center;
+  align-items:center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+#root {
+  /* border:2px solid red; */
+  margin:0;
+  padding:0;
+}
+
+.react-container {
+  /* border:2px solid green; */
+  margin:0;
+  padding:0;
+}
+
+.app-container {
+  background-color: var(--app-back-ground);
+  margin:0;
+  padding:0;
+  width:340px;
+  height:620px;
+  border-radius:1em;
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+  justify-content:center;
+  align-items:center;
+}
+
+/* 
+.landing-container
+.landing-title .text 
+.landing-description .text
+.landing-button .button 
+*/
+
+.landing-container {
+  position:absolute;
+  /* outline:2px solid red; */
+  width:25em;
+  height:30em;
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.landing-title {
+  font-size:3em;
+  text-decoration-line:underline;
+}
+
+.landing-description{
+  font-size:1.2em;
+  font-style:italic;
+}
+
+.landing-button {
+  font-size:1.5em;
+}
+
+.button-submit {
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400;
+  background-color:var(--button);
+  color:var(--app-back-ground);
+  border-radius:0.25em;
+}
+
+.button:hover {
+  cursor:pointer;
+}
+
+.button:active {
+  background-color:var(--dark-text);
+}
+
+
+
+
+/* 
+.quiz-container
+.quiz-question-container
+.quiz-question
+.quiz-answers-container
+.quiz-answer 
+.quiz-submit
+.quiz-results-submit-container
+.quiz-results
+*/
+
+.quiz-container {
+  position:absolute;
+  /* outline:2px solid red; */
+  width:25em;
+  height:38em;
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+  justify-content:space-evenly;
+  align-items:center;
+}
+
+.quiz-question-container {
+  display:flex;
+  flex-direction:column;
+  flex-wrap:nowrap;
+  justify-content:space-evenly;
+  align-items:center;
+  padding:0;
+  margin:0;
+}
+
+.quiz-question {
+  margin:0.2em;
+  padding:0;
+  color:var(--dark-text);
+  font-size:1em;
+}
+
+.quiz-answers-container {
+  /* outline:2px solid red; */
+  width:100%;
+  max-width:25em;
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  justify-content:space-evenly;
+  align-items:center;
+}
+
+.quiz-answer {
+  margin:0.2em;
+  border-radius:0.7em;
+  font-size:0.7em;
+  font-family:'Inter';
+  font-style:normal;
+  font-weight:400;
+  color:var(--dark-text);
+}
+
+.selected {
+  background-color:var(--selected-answer);
+}
+.incorrect {
+  background-color:var(--wrong-answer);
+}
+.correct {
+  background-color:var(--correct-answer);
+}
+
+hr {
+  background-color:var(--body-back-ground);
+  height:1px;
+  width:18em;
+}
+
+.quiz-results-submit-container {
+  /* outline:2px solid black; */
+  display:flex;
+  flex-direction:row;
+  flex-wrap:nowrap;
+  gap:0.5em;
+  justify-content:space-between;
+}
+
+.quiz-results {
+  color:var(--dark-text);
+}
+
+.quiz-submit {
+  font-size:1.4em;
+}
+
+
+
+
+
+
+
+/* media dimension 
+360x640px
+1366x768px */
+@media (max-width:2500px){
+  :root{
+    font-size:20px;
+  }
+  .app-container {
+    /* outline:2px solid yellow; */
+    width:900px;
+    height:800px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width:1000px){
+  :root{
+    font-size:15px;
   }
-  to {
-    transform: rotate(360deg);
+  .app-container {
+    /* outline:2px solid red; */
+    width:500px;
+    height:600px;
+  }
+}
+
+@media (max-width:500px){
+  :root{
+    font-size:10px;
+  }
+  .app-container {
+    /* outline:2px solid green; */
+    width:340px;
+    height:620px;
   }
 }
